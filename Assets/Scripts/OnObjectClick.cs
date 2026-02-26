@@ -8,21 +8,22 @@ public class OnObjectClick : MonoBehaviour
     public Material selectedMaterial;
     public Material baseMaterial;
 
-    public bool isSelected;
+    private bool _isSelected;
+    public bool IsSelected => _isSelected;
 
     private void OnMouseDown()
     {
-        if (!isSelected)
+        if (!IsSelected)
         {
             panelUI.gameObject.SetActive(true);
 
             GetComponent<MeshRenderer>().material = selectedMaterial;
-            isSelected = true;
+            _isSelected = true;
         }
         else 
         {
             GetComponent<MeshRenderer>().material = baseMaterial;
-            isSelected = false;
+            _isSelected = false;
         }
     }
 }

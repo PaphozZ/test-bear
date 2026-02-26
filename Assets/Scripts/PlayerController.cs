@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Controller : MonoBehaviour
 {
@@ -6,6 +7,9 @@ public class Controller : MonoBehaviour
     public Transform _cameraTransform;
     private float rotationX;
     private float rotationY;
+
+    [SerializeField] private float moveSpeed = 1f;
+    private Vector2 moveInput;
 
     void Start()
     {
@@ -50,16 +54,9 @@ public class Controller : MonoBehaviour
 
     private void Move()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
+        moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
 
-        if (Input.GetKey(KeyCode.W))
-            characterController.Move(new Vector3(0, 0, 1));
-        if (Input.GetKey(KeyCode.A))
-            characterController.Move(new Vector3(-1, 0, 0));
-        if (Input.GetKey(KeyCode.S))
-            characterController.Move(new Vector3(0, 0, -1));      
-        if (Input.GetKey(KeyCode.D))
-            characterController.Move(new Vector3(1, 0, 0));
+        Vector3 movement = new Vector3(moveInput.x, 0, moveInput.y) * moveSpeed;
+        transform.Translate(movement, Space.World);
     }
 }
