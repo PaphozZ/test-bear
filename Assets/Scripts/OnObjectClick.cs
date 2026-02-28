@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class OnObjectClick : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class OnObjectClick : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (!IsSelected)
         {
             panelUI.gameObject.SetActive(true);
